@@ -60,3 +60,7 @@ Mkfile.old
 dkms.conf
 
 .dccache
+*.iso
+isodir
+sysroot
+*.kernel
