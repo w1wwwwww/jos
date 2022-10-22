@@ -65,3 +65,4 @@ isodir
 sysroot
 *.kernel
 autom4te.cache
+test.sh
