@@ -3,8 +3,7 @@
 .type _init, @function
 _init:
 	push %ebp
-	movl %esp, %ebp
-	/* gcc will nicely put the contents of crtbegin.o's .init section here. */
+	movl %esp, %ebp/
 
 .section .fini
 .global _fini
@@ -12,4 +11,3 @@ _init:
 _fini:
 	push %ebp
 	movl %esp, %ebp
-	/* gcc will nicely put the contents of crtbegin.o's .fini section here. */
