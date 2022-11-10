@@ -11,16 +11,16 @@ jobs:
           sudo apt-get install libgmp3-dev libmpc-dev libmpfr-dev mtools
       - name: Step 2 - Set up environment variables
         run: |
-          export PREFIX='$HOME/opt/cross'
+          export PREFIX="$HOME/opt/cross"
           export TARGET=i686-elf
-          export PATH='$PREFIX/bin:$PATH'
+          export PATH="$PREFIX/bin:$PATH"
       - name: Step 3 - Build Binutils
         run: |
           mkdir build-binutils
           cd build-binutils
           curl https://ftp.gnu.org/gnu/binutils/binutils-2.39.tar.gz -O
           tar xzf binutils-2.39.tar.gz
-          ./binutils-2.39/configure --target=$TARGET --prefix='$PREFIX' --with-sysroot --disable-nls --disable-werror
+          ./binutils-2.39/configure --target=$TARGET --prefix="$PREFIX" --with-sysroot --disable-nls --disable-werror
           make
           make install
           cd ..
@@ -30,7 +30,7 @@ jobs:
           cd build-gcc
           curl https://ftp.gnu.org/gnu/gcc/gcc-12.2.0/gcc-12.2.0.tar.gz -O
           tar xzf gcc-12.2.0.tar.gz
-          ./gcc-12.2.0/configure --target=$TARGET --prefix='$PREFIX' --disable-nls --enable-languages=c,c++ --without-headers
+          ./gcc-12.2.0/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --enable-languages=c,c++ --without-headers
           make all-gcc
           make all-target-libgcc
           make install-gcc
