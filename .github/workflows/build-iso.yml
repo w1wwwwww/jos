@@ -9,13 +9,11 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install libgmp3-dev libmpc-dev libmpfr-dev mtools libc6
-      - name: Step 2 - Set up environment variables
+      - name: Step 2 - Build Binutils
         run: |
           export PREFIX="$HOME/opt/cross"
           export TARGET=i686-elf
           export PATH="$PREFIX/bin:$PATH"
-      - name: Step 3 - Build Binutils
-        run: |
           mkdir build-binutils
           cd build-binutils
           curl https://ftp.gnu.org/gnu/binutils/binutils-2.39.tar.gz -O
@@ -24,8 +22,11 @@ jobs:
           make
           sudo make install
           cd ..
-      - name: Step 4 - Build GCC
+      - name: Step 3 - Build GCC
         run: |
+          export PREFIX="$HOME/opt/cross"
+          export TARGET=i686-elf
+          export PATH="$PREFIX/bin:$PATH"
           mkdir build-gcc
           cd build-gcc
           curl https://ftp.gnu.org/gnu/gcc/gcc-12.2.0/gcc-12.2.0.tar.gz -O
@@ -36,12 +37,15 @@ jobs:
           sudo make install-gcc
           sudo make install-target-libgcc
           cd ..
-      - name: Step 5 - Build ISO
+      - name: Step 4 - Build ISO
         run: |
+          export PREFIX="$HOME/opt/cross"
+          export TARGET=i686-elf
+          export PATH="$PREFIX/bin:$PATH"
           git clone https://github.com/w1wwwwww/jos
           cd jos
           make iso
-      - name: Step 6 - Upload ISO
+      - name: Step 5 - Upload ISO
         uses: actions/upload-artifact@v3
         with:
           name: jos-${{ github.run_number }}
