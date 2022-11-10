@@ -8,7 +8,7 @@ jobs:
       - name: Step 1 - Install build dependancies
         run: |
           sudo apt-get update
-          sudo apt-get install libgmp3-dev libmpc-dev libmpfr-dev mtools
+          sudo apt-get install build-essential libgmp3-dev libmpc-dev libmpfr-dev mtools
       - name: Step 2 - Set up environment variables
         run: |
           export PREFIX="$HOME/opt/cross"
