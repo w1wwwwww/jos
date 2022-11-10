@@ -1,0 +1,48 @@
+﻿name: Build ISO
+on: push
+
+jobs:
+  build-iso:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1 - Install build dependancies
+        run: |
+          sudo apt-get update
+          sudo apt-get install libgmp3-dev libmpc-dev libmpfr-dev mtools
+      - name: Step 2 - Set up environment variables
+        run: |
+          export PREFIX='$HOME/opt/cross'
+          export TARGET=i686-elf
+          export PATH='$PREFIX/bin:$PATH'
+      - name: Step 3 - Build Binutils
+        run: |
+          mkdir build-binutils
+          cd build-binutils
+          curl https://ftp.gnu.org/gnu/binutils/binutils-2.39.tar.gz -O
+          tar xzf binutils-2.39.tar.gz
+          ./binutils-2.39/configure --target=$TARGET --prefix='$PREFIX' --with-sysroot --disable-nls --disable-werror
+          make
+          make install
+          cd ..
+      - name: Step 4 - Build GCC
+        run: |
+          mkdir build-gcc
+          cd build-gcc
+          curl https://ftp.gnu.org/gnu/gcc/gcc-12.2.0/gcc-12.2.0.tar.gz -O
+          tar xzf gcc-12.2.0.tar.gz
+          ./gcc-12.2.0/configure --target=$TARGET --prefix='$PREFIX' --disable-nls --enable-languages=c,c++ --without-headers
+          make all-gcc
+          make all-target-libgcc
+          make install-gcc
+          make install-target-libgcc
+          cd ..
+      - name: Step 5 - Build ISO
+        run: |
+          git clone https://github.com/w1wwwwww/jos
+          cd jos
+          make iso
+      - name: Step 6 - Upload ISO
+        uses: actions/upload-artifact@v3
+        with:
+          name: jos-${{ github.run_number }}
+          path: jos.iso
