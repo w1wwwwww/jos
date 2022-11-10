@@ -22,7 +22,7 @@ jobs:
           tar xzf binutils-2.39.tar.gz
           ./binutils-2.39/configure --target=$TARGET --prefix="$PREFIX" --with-sysroot --disable-nls --disable-werror
           make
-          make install
+          sudo make install
           cd ..
       - name: Step 4 - Build GCC
         run: |
@@ -33,8 +33,8 @@ jobs:
           ./gcc-12.2.0/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --enable-languages=c,c++ --without-headers
           make all-gcc
           make all-target-libgcc
-          make install-gcc
-          make install-target-libgcc
+          sudo make install-gcc
+          sudo make install-target-libgcc
           cd ..
       - name: Step 5 - Build ISO
         run: |
