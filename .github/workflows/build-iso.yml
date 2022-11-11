@@ -45,6 +45,7 @@ jobs:
           git clone https://github.com/w1wwwwww/jos
           cd jos
           make iso
+          mv jos.iso ../jos.iso
       - name: Step 5 - Upload ISO
         uses: actions/upload-artifact@v3
         with:
