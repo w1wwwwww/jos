@@ -61,8 +61,8 @@ dkms.conf
 
 .dccache
 *.iso
-isodir
-sysroot
+isodir/
+sysroot/
 *.kernel
-autom4te.cache
 test.sh
+.vscode/
