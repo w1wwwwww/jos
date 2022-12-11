@@ -20,3 +20,6 @@ iso:
 
 	mv src/sysroot sysroot
 	mv src/jos.iso jos.iso
+
+test: iso
+	qemu-system-i386 -cdrom jos.iso -serial file:serial.log

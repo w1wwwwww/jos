@@ -64,5 +64,5 @@ dkms.conf
 isodir/
 sysroot/
 *.kernel
-test.sh
+serial.log
 .vscode/
